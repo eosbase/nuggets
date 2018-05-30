@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # a simple script for tracing and prettifying nodeos and keosd traffic
+# note, since this prettifies the json body, the Content-Length is shown incorrectly
 
 # first sudo apt install ngrep jq
 # then put this file somewhere in your path and make it executable
