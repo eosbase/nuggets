@@ -1,5 +1,6 @@
 #!/bin/sh
 # below settings are only meant for testing, they are not safe for production use !!
+# note, if you put "termcapinfo xterm* ti@:te@" in your ~/.screenrc you'll be able to scroll back easier
 screen -S nodeos -m /usr/local/bin/nodeos -e -p eosio \
 	--plugin eosio::chain_api_plugin \
 	--plugin eosio::history_api_plugin \
