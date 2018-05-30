@@ -1,0 +1,5 @@
+#!/bin/sh
+# below settings are only meant for testing, they are not safe for production use !!
+screen -S keosd -m /usr/local/bin/keosd \
+	--http-server-address 0.0.0.0:8900 \
+	--unlock-timeout 86400

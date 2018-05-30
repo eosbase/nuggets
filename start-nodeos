@@ -1,0 +1,7 @@
+#!/bin/sh
+# below settings are only meant for testing, they are not safe for production use !!
+screen -S nodeos -m /usr/local/bin/nodeos -e -p eosio \
+	--plugin eosio::chain_api_plugin \
+	--plugin eosio::history_api_plugin \
+	--http-server-address 0.0.0.0:8888 \
+	--access-control-allow-origin "*"
