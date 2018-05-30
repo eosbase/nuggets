@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# a simple script for tracing and prettifying nodeos and keosd traffic
+
+# first sudo apt install ngrep jq
+# then put this file somewhere in your path and make it executable
+
+usage="sudo $0 [-d any] [\"regex-match\"]"
+
+interface=any
+match=.
+
+while getopts "d:h" opts
+do
+  case $opts in
+    d ) interface=$OPTARG
+    ;;
+    h ) echo Usage: $usage && exit
+    ;;
+  esac
+done
+
+shift $(($OPTIND - 1))
+if [[ $# -gt 0 ]]
+  then
+    match=$1
+fi
+
+ngrep -d $interface -q -tt -l -W byline $match "tcp and (port 8888 or port 8900)" \
+| while read -r line
+  do
+    if [[ $line =~ ^[\"[\{] ]]
+      then
+        echo $line | jq
+      else
+        echo $line
+    fi
+  done
