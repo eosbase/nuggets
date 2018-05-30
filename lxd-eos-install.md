@@ -1,4 +1,4 @@
-# Install EOS
+# LXD EOS Install
 
 Following page describes setting up a fresh Ubuntu Xenial container for installing EOS in.
 
