@@ -4,9 +4,9 @@ Following page describes setting up a fresh Ubuntu Xenial container for installi
 
 Note that it's not secured or anything, just easy to work with, start over, etc.
 
-## Prepare Ubuntu 16.04 LXD container:
-
 Assuming LXC/LXD is already installed.
+
+## Prepare Ubuntu 16.04 LXD container:
 
 Create the container
 ```sh
