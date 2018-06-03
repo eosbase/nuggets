@@ -79,7 +79,7 @@ Reboot the container
 reboot
 ```
 
-## Install and start EOS.IO software and some tooling in the container
+## Install and start EOS.IO software and some tooling
 
 You can optionally remove the hostkey on your client with
 ```sh
@@ -175,7 +175,7 @@ cleos wallet open
 cleos wallet unlock --password $(sed -n '4 s/\"//gp' ~/EOSCREDENTIALS)
 ```
 
-Create some accounts and store their keys in ~/EOSCREDENTIALS
+Create some accounts, store the private key in the wallet and a copy of the keys ~/EOSCREDENTIALS
 ```sh
 accounts=bob alice
 printf "\n%-12s %-51s %s\n\n" Account "Private key" "Public key" | tee -a ~/EOSCREDENTIALS
@@ -184,6 +184,7 @@ for account in bob alice; do
   private_key=$(echo $keypair | awk '{print $3}')
   public_key=$(echo $keypair | awk '{print $6}')
   printf "%-12s $private_key $public_key\n" $account | tee -a ~/EOSCREDENTIALS
-  cleos create account eosio $account $pubkey $pubkey
+  cleos create account eosio $account $pubkey $pubkey \
+    && cleos wallet import $private_key
 done
 ```
