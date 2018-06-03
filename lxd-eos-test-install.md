@@ -7,7 +7,7 @@ Note that it's not secured or anything, just easy to work with, start over, etc.
 Assuming LXC/LXD is already installed, example:
 * https://www.hiroom2.com/2018/05/14/ubuntu-1804-lxd-en
 
-External resources:
+Official EOS.IO resources:
 * https://developers.eos.io
 * https://github.com/EOSIO/eos/wiki
 
@@ -23,13 +23,9 @@ Enter a shell in the container
 sudo lxc exec eos bash
 ```
 
-Delete the ubuntu user and create an eos user
+Create an eos user and add it to group sudo and allow it to sudo without password
 ```sh
 useradd -m -s /bin/bash eos
-```
-
-Add user eos to group sudo and allow it to sudo without password
-```sh
 usermod -a -G sudo eos
 perl -pi -e 's/^%sudo.*$/%sudo ALL=(ALL:ALL) NOPASSWD:ALL/' /etc/sudoers
 ```
