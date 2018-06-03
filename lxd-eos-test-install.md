@@ -70,11 +70,6 @@ ff02::3 ip6-allhosts
 EOF
 ```
 
-Reboot the container
-```sh
-reboot
-```
-
 ## Install and start EOS.IO software and some tooling
 
 You can optionally remove the hostkey on your client with
