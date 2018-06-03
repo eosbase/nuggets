@@ -1,6 +1,6 @@
 # LXD EOS Install
 
-Following page describes setting up a fresh Ubuntu Xenial container and installing a test EOS in.
+Following page describes setting up a fresh Ubuntu Bionic container and installing a test EOS in.
 
 Note that it's not secured or anything, just easy to work with, start over, etc.
 
