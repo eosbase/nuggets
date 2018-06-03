@@ -1,10 +1,15 @@
 # LXD EOS Install
 
-Following page describes setting up a fresh Ubuntu Xenial container for installing EOS in.
+Following page describes setting up a fresh Ubuntu Xenial container and installing a test EOS in.
 
 Note that it's not secured or anything, just easy to work with, start over, etc.
 
 Assuming LXC/LXD is already installed.
+
+External resources:
+* https://github.com/EOSIO/eos/wiki/Local-Environment
+* https://developers.eos.io/
+* https://www.youtube.com/watch?v=glB6UPHo1rA
 
 ## Prepare Ubuntu 16.04 LXD container:
 
@@ -86,10 +91,8 @@ ssh eos@10.0.0.10
 
 Install prerequisites:
 ```sh
-sudo apt install git
+sudo apt install git ngrep jq
 ```
-
-Further instructions are taken from https://github.com/EOSIO/eos/wiki/Local-Environment
 
 Clone the EOS software
 ```sh
@@ -108,3 +111,36 @@ Install it
 cd build
 sudo make install
 ```
+
+Install some scripts for starting cleosd and keosd:
+```sh
+destdir=/usr/local/bin
+for file in start-nodeos start-keosd eosgrep; do
+  sudo wget -c -P $destdir https://raw.githubusercontent.com/eosbase/various/master/$file
+  sudo chmod +x $destdir/$file
+done
+```
+
+You can now start a keosd and nodeos instance. Above scripts will start them in a named screen which you can detach from with "Ctrl-A" followed by "d".
+```sh
+start-keosd
+Ctrl-A d
+
+start-nodeos
+Ctrl-A d
+```
+
+You can list all active screens with:
+```sh
+screen -list
+```
+
+And re-attach to one of them with:
+```sh
+screen -r keosd
+screen -r nodeos
+```
+
+And again, detach in the same manner.
+
+
