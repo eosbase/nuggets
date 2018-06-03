@@ -79,6 +79,8 @@ Reboot the container
 reboot
 ```
 
+## Install and start EOS.IO software and some tooling in the container
+
 You can optionally remove the hostkey on your client with
 ```sh
 ssh-keygen -R 10.0.0.10
@@ -141,6 +143,47 @@ screen -r keosd
 screen -r nodeos
 ```
 
-And again, detach in the same manner.
+Again, detach in the same manner.
 
+## Create some accounts and setup basic contracts
 
+If you open a 2nd shell to the container, then you can trace all traffic between cleos client and nodeos and keosd as follows
+```sh
+sudo eosgrep
+```
+
+While that is running perform some basic checks from the other shell
+```sh
+cleos get info
+```
+
+Get the init account
+```sh
+cleos get account eosio
+```
+
+Following couple of commands will create a ~/EOSCREDENTIALS file
+
+Create a new default wallet
+```sh
+cleos wallet create | tee ~/EOSCREDENTIALS
+```
+
+Open and unlock the default wallet (below just reads the password without quotes from the 4th line of the just created file)
+```sh
+cleos wallet open
+cleos wallet unlock --password $(sed -n '4 s/\"//gp' ~/EOSCREDENTIALS)
+```
+
+Create some accounts and store their keys in ~/EOSCREDENTIALS
+```sh
+accounts=bob alice
+printf "\n%-12s %-51s %s\n\n" Account "Private key" "Public key" | tee -a ~/EOSCREDENTIALS
+for account in bob alice; do
+  keypair=$(cleos create key | tr '\n' ' ')
+  private_key=$(echo $keypair | awk '{print $3}')
+  public_key=$(echo $keypair | awk '{print $6}')
+  printf "%-12s $private_key $public_key\n" $account | tee -a ~/EOSCREDENTIALS
+  cleos create account eosio $account $pubkey $pubkey
+done
+```
