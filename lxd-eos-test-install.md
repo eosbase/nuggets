@@ -4,12 +4,12 @@ Following page describes setting up a fresh Ubuntu Xenial container and installi
 
 Note that it's not secured or anything, just easy to work with, start over, etc.
 
-Assuming LXC/LXD is already installed.
+Assuming LXC/LXD is already installed, example:
+* https://www.hiroom2.com/2018/05/14/ubuntu-1804-lxd-en
 
 External resources:
-* https://github.com/EOSIO/eos/wiki/Local-Environment
-* https://developers.eos.io/
-* https://www.youtube.com/watch?v=glB6UPHo1rA
+* https://developers.eos.io
+* https://github.com/EOSIO/eos/wiki
 
 ## Prepare Ubuntu 16.04 LXD container:
 
@@ -53,17 +53,17 @@ network:
     ethernets:
         eth0:
             dhcp4: no
-            addresses: [10.0.0.10/24]
-            gateway4: 10.0.0.1
+            addresses: [172.31.0.31/24]
+            gateway4: 172.31.0.1
             nameservers:
-                    addresses: [10.0.0.1]
+                    addresses: [172.31.0.1]
 EOF
 
 sudo netplan apply
 
 cat >/etc/hosts <<EOF
 127.0.0.1 localhost
-10.0.0.10 eos
+172.31.0.31 eos
 
 ::1 ip6-localhost ip6-loopback
 fe00::0 ip6-localnet
@@ -83,12 +83,12 @@ reboot
 
 You can optionally remove the hostkey on your client with
 ```sh
-ssh-keygen -R 10.0.0.10
+ssh-keygen -R 172.31.0.31
 ```
 
 Now shell to the container
 ```sh
-ssh eos@10.0.0.10
+ssh eos@172.31.0.31
 ```
 
 Install prerequisites:
@@ -198,5 +198,3 @@ Set the eosio.token contract
 ```sh
 cleos set contract eosio.token ~/eos/build/contracts/eosio.token -p eosio.token
 ```
-
-
