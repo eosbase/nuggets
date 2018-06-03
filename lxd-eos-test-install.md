@@ -145,7 +145,7 @@ screen -r nodeos
 
 Again, detach in the same manner.
 
-## Create some accounts and setup basic contracts
+## Create some accounts and setup contracts
 
 If you open a 2nd shell to the container, then you can trace all traffic between cleos client and nodeos and keosd as follows
 ```sh
