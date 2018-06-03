@@ -10,17 +10,16 @@ Assuming LXC/LXD is already installed.
 
 Create the container
 ```sh
-lxc launch ubuntu:xenial eos
+sudo lxc launch ubuntu:bionic eos
 ```
 
 Enter a shell in the container
 ```sh
-lxc exec eos bash
+sudo lxc exec eos bash
 ```
 
 Delete the ubuntu user and create an eos user
 ```sh
-userdel -r ubuntu
 useradd -m -s /bin/bash eos
 ```
 
@@ -43,17 +42,19 @@ chown -R eos:eos ~eos/.ssh
 
 Fix networking
 ```sh
-cat >/etc/network/interfaces <<EOF
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet static
-  address 10.0.0.10
-  netmask 255.255.255.0
-  gateway 10.0.0.1
-  dns-nameservers 10.0.0.1
+cat > /etc/netplan/50-cloud-init.yaml <<EOF
+network:
+    version: 2
+    ethernets:
+        eth0:
+            dhcp4: no
+            addresses: [10.0.0.10/24]
+            gateway4: 10.0.0.1
+            nameservers:
+                    addresses: [10.0.0.1]
 EOF
+
+sudo netplan apply
 
 cat >/etc/hosts <<EOF
 127.0.0.1 localhost
@@ -83,6 +84,11 @@ Now shell to the container
 ssh eos@10.0.0.10
 ```
 
+Install prerequisites:
+```sh
+sudo apt install git
+```
+
 Further instructions are taken from https://github.com/EOSIO/eos/wiki/Local-Environment
 
 Clone the EOS software
@@ -95,6 +101,7 @@ Build it
 cd eos
 ./eosio_build.sh
 ```
+(enter yes when asked to install dependency packages)
 
 Install it
 ```sh
