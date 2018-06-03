@@ -169,7 +169,7 @@ Create a new default wallet
 cleos wallet create | tee ~/EOSCREDENTIALS
 ```
 
-Open and unlock the default wallet (below just reads the password without quotes from the 4th line of the just created file)
+Open and unlock the default wallet with the password we just stored in ~/EOSCREDENTIALS
 ```sh
 cleos wallet open
 cleos wallet unlock --password $(sed -n '4 s/\"//gp' ~/EOSCREDENTIALS)
