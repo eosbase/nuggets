@@ -11,7 +11,7 @@ Official EOS.IO resources:
 * https://developers.eos.io
 * https://github.com/EOSIO/eos/wiki
 
-## Prepare Ubuntu 16.04 LXD container:
+## Prepare Ubuntu 18.04 LXD container:
 
 Create the container
 ```sh
@@ -105,7 +105,7 @@ cd build
 sudo make install
 ```
 
-Install some scripts for starting cleosd and keosd:
+Install some scripts for tracing and starting nodeos and keosd in a screen:
 ```sh
 destdir=/usr/local/bin
 for file in start-nodeos start-keosd eosgrep; do
